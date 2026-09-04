@@ -8,125 +8,112 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Public+Sans:wght@400;500;600;700;800&family=Courier+Prime:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
         :root{
-            --kraft:#C7A574;
-            --kraft-dark:#9C7B4C;
-            --kraft-darker:#7C6039;
-            --card:#F1EAD6;
-            --ink:#2B2A25;
-            --ink-soft:#6B6250;
-            --stamp:#A63D2F;
-            --forest:#2F4A3C;
+            --paper:#FAF6EC;
+            --paper-line:#E4DCC8;
+            --navy:#1E2A44;
+            --navy-soft:#4A5670;
+            --gold:#A9803C;
+            --sage:#6E7E63;
+            --rule:#C9BE9E;
         }
-        body{ font-family:'Public Sans', sans-serif; background:var(--kraft-darker); color:var(--ink); }
-        .font-type{ font-family:'Special Elite', monospace; }
-        .font-mono{ font-family:'Courier Prime', monospace; }
+        body{ font-family:'IBM Plex Mono', monospace; background:var(--navy); color:var(--navy); }
+        .font-display{ font-family:'Newsreader', serif; }
 
-        .cork-texture{
-            background-color: var(--kraft);
-            background-image: radial-gradient(rgba(0,0,0,0.06) 1px, transparent 1px);
-            background-size: 14px 14px;
+        .letterhead{
+            background: var(--navy);
+            background-image:
+                linear-gradient(180deg, rgba(255,255,255,0.04), transparent 40%);
         }
 
-        .tab-btn{
-            position:relative;
-            clip-path: polygon(10% 0, 90% 0, 100% 100%, 0% 100%);
+        .ledger{
+            background: var(--paper);
         }
 
-        .index-card{
-            background: var(--card);
-            background-image: repeating-linear-gradient(
-                to bottom, transparent, transparent 27px,
-                rgba(43,42,37,0.08) 27px, rgba(43,42,37,0.08) 28px
-            );
-            border: 1px solid rgba(43,42,37,0.15);
-            box-shadow: 0 18px 40px -20px rgba(0,0,0,0.5), 0 2px 0 rgba(255,255,255,0.4) inset;
+        .ledger-row{
+            border-bottom: 1px solid var(--paper-line);
+            transition: background-color 0.15s ease;
         }
-        .index-card::before{
-            content:"";
-            position:absolute;
-            top:0; bottom:0; left:40px;
-            width:1px;
-            background: rgba(166,61,47,0.35);
+        .ledger-row:hover{
+            background-color: rgba(169,128,60,0.06);
         }
 
-        .stamp{
-            border: 3px solid var(--stamp);
-            color: var(--stamp);
-            border-radius: 6px;
-            mix-blend-mode: multiply;
-            opacity: 0.85;
+        .col-rule{
+            border-left: 1px solid var(--paper-line);
         }
 
-        .stitch{ border-top: 2px dashed rgba(43,42,37,0.25); }
+        .seal{
+            width: 34px; height: 34px;
+            border: 1.5px solid var(--gold);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        ::selection{ background: var(--gold); color: var(--paper); }
     </style>
 </head>
 <body class="h-screen overflow-hidden flex flex-col">
-    <header class="flex-shrink-0 pt-5 px-8 cork-texture">
-        <div class="flex items-end justify-between">
-            <div class="flex items-end gap-1">
-                <div class="tab-btn font-type text-sm px-6 pt-3 pb-3" style="background:var(--forest); color:var(--card);">
-                    <i class="fa-solid fa-address-card mr-2"></i>LavaLust Registry
+
+    <header class="letterhead flex-shrink-0 px-8 md:px-12 pt-8 pb-6">
+        <div class="flex items-center justify-between max-w-6xl mx-auto">
+            <div class="flex items-center gap-4">
+                <div class="seal">
+                    <i class="fa-solid fa-graduation-cap text-sm" style="color:var(--gold);"></i>
                 </div>
-                <div class="tab-btn font-type text-sm px-6 pt-3 pb-4 -mb-px" style="background:var(--card); color:var(--ink);">
-                    Users
+                <div>
+                    <p class="font-display italic text-sm" style="color:#C9BE9E;">Academic Portal</p>
+                    <h1 class="font-display text-2xl md:text-3xl" style="color:var(--paper);">Roster of Registered Users</h1>
                 </div>
-                <a href="#" class="tab-btn font-type text-sm px-6 pt-3 pb-3 hover:pb-4 transition-all hidden md:block" style="background:rgba(241,234,214,0.35); color:var(--ink-soft);">
-                    Reports
-                </a>
-                <a href="#" class="tab-btn font-type text-sm px-6 pt-3 pb-3 hover:pb-4 transition-all hidden lg:block" style="background:rgba(241,234,214,0.35); color:var(--ink-soft);">
-                    Settings
-                </a>
             </div>
+            <nav class="hidden md:flex items-center gap-8 text-xs tracking-wide" style="color:#9AA3B5;">
+                <a href="#" style="color:var(--paper); border-bottom: 1px solid var(--gold);" class="pb-1">Users</a>
+                <a href="#" class="hover:text-white transition-colors">Reports</a>
+                <a href="#" class="hover:text-white transition-colors">Settings</a>
+            </nav>
         </div>
     </header>
 
-    <main class="flex-1 overflow-y-auto cork-texture px-8 pb-10">
-        <div class="rounded-b-sm rounded-tr-sm p-8 min-h-full" style="background:var(--card); box-shadow:0 -2px 0 rgba(0,0,0,0.08) inset;">
+    <main class="ledger flex-1 overflow-y-auto px-8 md:px-12 py-8">
+        <div class="max-w-6xl mx-auto">
 
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8 stitch pt-6">
-                <div>
-                    <p class="font-mono text-xs tracking-widest" style="color:var(--stamp);">Registrar's File</p>
-                    <h2 class="font-type text-2xl mt-1" style="color:var(--ink);">User Directory</h2>
-                </div>
-                <p class="font-mono text-xs" style="color:var(--ink-soft);">
-                    Showing <?= isset($users) ? count($users) : 0 ?> filed record<?= (isset($users) && count($users) === 1) ? '' : 's' ?>
+            <div class="flex items-baseline justify-between mb-6 pb-4" style="border-bottom: 2px solid var(--navy);">
+                <p class="font-display text-lg italic" style="color:var(--navy-soft);">Entered on record</p>
+                <p class="text-xs" style="color:var(--sage);">
+                    <?= isset($users) ? count($users) : 0 ?> user<?= (isset($users) && count($users) === 1) ? '' : 's' ?> on file
                 </p>
             </div>
 
             <?php if (!empty($users)) : ?>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <?php foreach ($users as $user) : ?>
-                        <div class="index-card relative rounded-sm p-6 pt-7">
-                            <div class="flex items-start justify-between mb-5">
-                                <div class="pl-4">
-                                    <p class="font-mono text-[10px] tracking-[0.15em]" style="color:var(--stamp);">User ID</p>
-                                    <p class="font-mono text-base font-bold" style="color:var(--ink);">#<?= htmlspecialchars($user['id']) ?></p>
-                                </div>
-                                <div class="stamp font-type text-[10px] px-2 py-1 whitespace-nowrap">
-                                    On File
-                                </div>
-                            </div>
 
-                            <div class="pl-4 mb-5">
-                                <p class="font-type text-lg leading-tight" style="color:var(--ink);">
-                                    <?= htmlspecialchars($user['firstname']) ?> <?= htmlspecialchars($user['lastname']) ?>
-                                </p>
-                                <p class="font-mono text-xs mt-1" style="color:var(--ink-soft);">@<?= htmlspecialchars($user['username']) ?></p>
-                            </div>
+                <div class="hidden md:grid grid-cols-[3rem_1fr_1fr_1.4fr] gap-4 px-4 pb-3 text-xs" style="color:var(--sage);">
+                    <span>No.</span>
+                    <span>Name</span>
+                    <span>Username</span>
+                    <span>Email</span>
+                </div>
 
-                            <div class="pl-4 space-y-1.5 font-mono text-xs">
-                                <p><span class="inline-block w-16" style="color:var(--ink-soft);">Email:</span> <?= htmlspecialchars($user['email']) ?></p>
-                            </div>
+                <div>
+                    <?php foreach ($users as $i => $user) : ?>
+                        <div class="ledger-row grid grid-cols-1 md:grid-cols-[3rem_1fr_1fr_1.4fr] gap-1 md:gap-4 px-4 py-4 items-baseline">
+                            <span class="text-xs md:text-sm" style="color:var(--gold);">
+                                <?= str_pad($i + 1, 2, '0', STR_PAD_LEFT) ?>
+                            </span>
+                            <span class="font-display text-base md:text-lg" style="color:var(--navy);">
+                                <?= htmlspecialchars($user['firstname']) ?> <?= htmlspecialchars($user['lastname']) ?>
+                                <span class="hidden md:inline text-[10px] align-middle ml-2" style="color:var(--sage);">#<?= htmlspecialchars($user['id']) ?></span>
+                            </span>
+                            <span class="text-xs md:text-sm" style="color:var(--navy-soft);">@<?= htmlspecialchars($user['username']) ?></span>
+                            <span class="text-xs md:text-sm break-all" style="color:var(--navy-soft);"><?= htmlspecialchars($user['email']) ?></span>
                         </div>
                     <?php endforeach; ?>
                 </div>
+
             <?php else : ?>
-                <div class="index-card relative rounded-sm p-8 text-center">
-                    <p class="font-type text-base" style="color:var(--ink);">No records on file.</p>
-                    <p class="font-mono text-xs mt-2" style="color:var(--ink-soft);">Insert rows into the users table to see them here.</p>
+                <div class="text-center py-20">
+                    <p class="font-display text-xl italic mb-2" style="color:var(--navy);">No users on record</p>
+                    <p class="text-xs" style="color:var(--sage);">New entries will appear here once the users table has rows.</p>
                 </div>
             <?php endif; ?>
 
