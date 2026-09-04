@@ -24,6 +24,8 @@ AddDefaultCharset UTF-8
 
     # --------------------------------------------------
     # Route all requests through public/index.php
-    RewriteCond %{REQUEST_URI} !^/public/
+    # Exclude any request that is already targeting the public folder,
+    # whether the app is hosted at the domain root or inside a subdirectory.
+    RewriteCond %{REQUEST_URI} !^/(?:.*?/)?public(?:/|$) [NC]
     RewriteRule ^(.*)$ public/$1 [L,QSA]
 </IfModule>
