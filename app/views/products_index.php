@@ -10,15 +10,43 @@ $is_admin = (($_SESSION['role'] ?? null) === 'admin');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products | Product Manager</title>
     <style>
+        :root {
+            --bg-1: #f6f8ff;
+            --bg-2: #eef4ff;
+            --panel: rgba(255,255,255,0.9);
+            --panel-border: rgba(148, 163, 184, 0.22);
+            --text: #0f172a;
+            --muted: #64748b;
+            --line: #e2e8f0;
+            --brand: #2563eb;
+            --brand-dark: #1d4ed8;
+            --brand-soft: #dbeafe;
+            --success-bg: #dcfce7;
+            --success-text: #166534;
+            --error-bg: #fee2e2;
+            --error-text: #991b1b;
+            --warning-bg: #fef3c7;
+            --warning-text: #92400e;
+            --shadow: 0 24px 60px rgba(37, 99, 235, 0.12);
+        }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg, #f4f7fb 0%, #e8edf5 100%);
-            color: #1f2937;
             min-height: 100vh;
-            padding: 2.5rem 1.5rem;
+            padding: 2.5rem 1.25rem;
+            background:
+                radial-gradient(circle at top left, rgba(37, 99, 235, 0.14), transparent 24%),
+                linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 100%);
+            color: var(--text);
         }
-        .wrap { max-width: 1000px; margin: 0 auto; }
+
+        .wrap {
+            max-width: 1180px;
+            margin: 0 auto;
+        }
+
         .topbar {
             display: flex;
             align-items: center;
@@ -26,46 +54,185 @@ $is_admin = (($_SESSION['role'] ?? null) === 'admin');
             gap: 1rem;
             margin-bottom: 1.5rem;
             flex-wrap: wrap;
+            padding: 1rem 0;
         }
-        h1 { font-size: 1.6rem; }
-        .actions { display: flex; gap: .6rem; align-items: center; }
-        .btn {
+
+        h1 {
+            font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+            letter-spacing: -0.04em;
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .user-tag {
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        .user-tag strong {
+            color: var(--text);
+        }
+
+        .role-badge {
             display: inline-block;
-            padding: .55rem 1rem;
-            border-radius: 8px;
-            font-size: .85rem;
-            font-weight: 600;
+            background: var(--warning-bg);
+            color: var(--warning-text);
+            padding: 0.2rem 0.55rem;
+            border-radius: 999px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            margin-left: 0.45rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.65rem 1rem;
+            border-radius: 10px;
+            font-size: 0.86rem;
+            font-weight: 700;
             text-decoration: none;
             border: none;
             cursor: pointer;
+            transition: all 0.2s ease;
         }
-        .btn-primary { background: #2563eb; color: #fff; }
-        .btn-primary:hover { background: #1d4ed8; }
-        .btn-muted { background: #e5e7eb; color: #1f2937; }
-        .btn-muted:hover { background: #d1d5db; }
-        .btn-danger { background: #dc2626; color: #fff; }
-        .btn-danger:hover { background: #b91c1c; }
-        .btn-sm { padding: .4rem .75rem; font-size: .8rem; }
-        .msg { padding: .7rem .9rem; border-radius: 8px; font-size: .85rem; margin-bottom: 1.25rem; }
-        .msg.success { background: #dcfce7; color: #166534; }
-        .msg.error { background: #fee2e2; color: #991b1b; }
-        .panel {
-            background: #fff;
+
+        .btn:hover { transform: translateY(-1px); }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+            color: #fff;
+            box-shadow: 0 12px 24px rgba(37, 99, 235, 0.18);
+        }
+
+        .btn-muted {
+            background: #edf2f7;
+            color: var(--text);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: #fff;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.78rem;
+        }
+
+        .msg {
+            padding: 0.82rem 0.95rem;
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-            overflow: hidden;
+            font-size: 0.86rem;
+            margin-bottom: 1.2rem;
+            border: 1px solid transparent;
         }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: .85rem 1.1rem; text-align: left; font-size: .9rem; }
-        th { background: #2563eb; color: #fff; font-weight: 600; }
-        tbody tr:nth-child(even) { background: #f8fafc; }
-        tbody tr:hover { background: #eef2ff; }
-        td { border-bottom: 1px solid #f1f5f9; }
-        td.desc { max-width: 260px; color: #4b5563; }
-        td.numeric { text-align: right; white-space: nowrap; }
-        .row-actions { display: flex; gap: .5rem; }
-        .empty { padding: 2rem; text-align: center; color: #6b7280; }
-        form.inline { display: inline; }
+
+        .msg.success {
+            background: var(--success-bg);
+            color: var(--success-text);
+            border-color: rgba(22, 101, 52, 0.08);
+        }
+
+        .msg.error {
+            background: var(--error-bg);
+            color: var(--error-text);
+            border-color: rgba(153, 27, 27, 0.08);
+        }
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--panel-border);
+            border-radius: 22px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 0.95rem 1rem;
+            text-align: left;
+            font-size: 0.92rem;
+        }
+
+        th {
+            background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+            color: #fff;
+            font-weight: 700;
+        }
+
+        tbody tr:nth-child(even) {
+            background: rgba(248, 250, 252, 0.8);
+        }
+
+        tbody tr:hover {
+            background: rgba(219, 234, 254, 0.6);
+        }
+
+        td {
+            border-bottom: 1px solid var(--line);
+            color: var(--text);
+            vertical-align: top;
+        }
+
+        td.desc {
+            max-width: 260px;
+            color: #475569;
+            line-height: 1.5;
+        }
+
+        td.numeric {
+            text-align: right;
+            white-space: nowrap;
+            font-weight: 600;
+        }
+
+        .row-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        form.inline {
+            display: inline;
+        }
+
+        .empty {
+            padding: 2.2rem 1rem;
+            text-align: center;
+            color: var(--muted);
+            background: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .topbar {
+                align-items: flex-start;
+            }
+
+            .actions {
+                width: 100%;
+            }
+
+            .panel {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 760px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -73,10 +240,10 @@ $is_admin = (($_SESSION['role'] ?? null) === 'admin');
     <div class="topbar">
         <h1>Products</h1>
         <div class="actions">
-            <span style="font-size:.85rem;color:#6b7280;">
+            <span class="user-tag">
                 Signed in as <strong><?= htmlspecialchars($_SESSION['username'] ?? ''); ?></strong>
                 <?php if (!$is_admin): ?>
-                    <span style="background:#e5e7eb;color:#4b5563;padding:.15rem .5rem;border-radius:6px;font-size:.75rem;margin-left:.4rem;">view only</span>
+                    <span class="role-badge">view only</span>
                 <?php endif; ?>
             </span>
             <?php if ($is_admin): ?>
