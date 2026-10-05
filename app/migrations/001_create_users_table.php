@@ -12,7 +12,7 @@ class Create_users_table {
 
     public function up()
     {
-        if ($this->_lava->dbforge->table_exists('user')) {
+        if ($this->_lava->dbforge->table_exists('users')) {
             return;
         }
 
@@ -74,6 +74,6 @@ class Create_users_table {
 
     public function down()
     {
-        $this->_lava->dbforge->drop_table('user');
+        $this->_lava->dbforge->drop_table('users');
     }
 }

@@ -8,7 +8,7 @@ class UsersModel extends Model
      *
      * @var string
      */
-    protected $table = 'user';
+    protected $table = 'users';
 
     /**
      * Primary key of the table.
