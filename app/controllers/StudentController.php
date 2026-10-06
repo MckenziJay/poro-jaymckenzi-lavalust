@@ -11,7 +11,7 @@ class StudentController extends Controller
  // Display student profile
  $student = [
     'student_id' => 'MCC2024-00147',
-    'name' => 'Jay Mckenzi A. Poro',
+    'name' => 'Jay  Mckenzi A. Poro',
     'course' => 'BS Information Technology',
     'year' => '3rd Year',
     'section' => 'F3',
