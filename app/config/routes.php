@@ -50,7 +50,14 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 // does not collide with the global $config Config object used elsewhere.
 (function () {
     require_once APP_DIR . 'config/middleware.php';
+<<<<<<< HEAD
     get_config($config);
+=======
+
+    if (isset($config) && is_array($config)) {
+        get_config($config);
+    }
+>>>>>>> 76a4d7e (poro1)
 })();
 
 $router->get('/', 'Welcome::index');
